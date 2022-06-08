@@ -8,6 +8,8 @@ This Password Generator generates passwords and stores them with the time of gen
 The passwords are stored in `generated_password.txt` in the current working directory. 
 (The same place where the script is located.)
 
+The format is `password : dd/mm/yyyy hh:mm:ss` where `dd/mm/yyyy` = date and `hh:mm:ss` = time of generation.
+
 # Are there any password generation limitations ?
 
 There are no password generation limitations. You can generate password as long as your Computer can handle.
