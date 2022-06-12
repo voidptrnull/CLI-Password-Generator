@@ -2,6 +2,7 @@
 import random
 import datetime
 import hashlib
+from time import sleep
 
 
 upper_letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
@@ -65,6 +66,7 @@ def process():
 			hash3_512 = hashlib.sha3_512(c).hexdigest()
 
 			# Print on Console
+			sleep(1)
 			print("The hashed password in sha1 is: " + hash1)
 			print("The hashed password in sha224 is: " + hash224)
 			print("The hashed password in sha256 is: " + hash256)
@@ -99,6 +101,7 @@ def process():
 			hash_store.write("	The hash in sha3_384 is: " + hash3_384 + " \n")
 			hash_store.write("	The hash in sha3_512 is: " + hash3_512 + " \n\n")
 			hash_store.close()
+			print("The generated hash is also stored in `hash_password.txt` file.")
 	except KeyboardInterrupt:
 		print("Shutdown requested...Goodbye...")
 	
