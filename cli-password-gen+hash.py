@@ -22,7 +22,7 @@ try:
 		random.shuffle(letters)
 	
 		if pno == "" or pno != int(pno):
-			pno = 8
+			pno = 16
 
 		pno = int(pno)
 
