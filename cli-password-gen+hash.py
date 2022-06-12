@@ -14,14 +14,17 @@ letters = upper_letters + lower_letters + digits + special_letters
 
 passwrd = []
 
-def process():
+try:
+	def process():
 	
-	try:
-		pno = int(input("Enter password length: "))    
+	
+		pno = str(input("Enter password length: "))    
 		random.shuffle(letters)
 	
-		if pno == "":
+		if pno == "" or pno != int(pno):
 			pno = 8
+
+		pno = int(pno)
 
 		# Proccess the password
 		for i in range(pno):
@@ -103,12 +106,11 @@ def process():
 			hash_store.write("	The hash in sha3_512 is: " + hash3_512 + " \n\n")
 			hash_store.close()
 			print("The generated hash is also stored in `hash_password.txt` file.")
-	except KeyboardInterrupt:
-		print("\n Shutdown requested...Goodbye...")
+	
 	
 
-def ask():
-	try:
+	def ask():
+	
 		asks = input("Do you want to continue ? ([Y]es/[N]o) : ")
 		if asks == "yes" or asks == "ye" or asks == "y" or asks == "":
 			while asks == "yes" or asks == "ye" or asks == "y" or asks == "":
@@ -121,8 +123,10 @@ def ask():
 		else:
 			print("Invalid.Try again.")
 			ask()
-	except KeyboardInterrupt:
-		print("\n Shutdown requested...Goodbye...")
+	
 
-process()
-ask()
+	process()
+	ask()
+
+except KeyboardInterrupt:
+		print("\n Shutdown requested...Goodbye...")
