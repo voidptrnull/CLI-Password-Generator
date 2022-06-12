@@ -4,11 +4,11 @@ import datetime
 import hashlib
 from time import sleep
 
-
+# source of alphabets
 upper_letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 lower_letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
 digits = ["0","1","2","3","4","5","6","7","8","9"]
-special_letters = ["!","@","#","$","%","^","&","*","(",")"]
+special_letters = ["!","@","#","$","%","^","&","*","(",")","_","-","+","=","{","}","[","]"]
 
 letters = upper_letters + lower_letters + digits + special_letters
 
@@ -49,6 +49,7 @@ def process():
 		print("The generated password is also stored in `generated_password.txt` file.")
 
 		m = c
+
 		## Start the hasing process
 		# encode the password in binary
 		c = c.encode()
@@ -90,7 +91,7 @@ def process():
 
 			# Write it in the file
 			hash_store = open("hashed_password.txt","a")
-			hash_store.write("The hashes for password "+ m +" is: \n")
+			hash_store.write("The hashes for password "+ m +" generated at "  +  " : " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S"))  + " is: \n")
 			hash_store.write("	The hash in sha1 is: " + hash1 + " \n")
 			hash_store.write("	The hash in sha224 is: " + hash224 + " \n")
 			hash_store.write("	The hash in sha256 is: " + hash256 + " \n")
@@ -103,14 +104,17 @@ def process():
 			hash_store.close()
 			print("The generated hash is also stored in `hash_password.txt` file.")
 	except KeyboardInterrupt:
-		print("Shutdown requested...Goodbye...")
+		print("\n Shutdown requested...Goodbye...")
 	
 
 def ask():
 	try:
 		asks = input("Do you want to continue ? ([Y]es/[N]o) : ")
 		if asks == "yes" or asks == "ye" or asks == "y" or asks == "":
-			process()
+			while asks == "yes" or asks == "ye" or asks == "y" or asks == "":
+				process()
+				ask()
+				break
 		elif asks == "no" or asks == "n":
 			print("Exiting...")
 			quit()
@@ -118,18 +122,7 @@ def ask():
 			print("Invalid.Try again.")
 			ask()
 	except KeyboardInterrupt:
-		print("Shutdown requested...Goodbye...")
-	
-		
-def execute():
-	try:
-		isLoop = True
-		while isLoop == True:
-			process()
-			ask()
-			break
-	except KeyboardInterrupt:
-		print("Shutdown requested...Goodbye...")
+		print("\n Shutdown requested...Goodbye...")
 
-
-execute()
+process()
+ask()
