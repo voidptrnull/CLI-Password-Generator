@@ -36,27 +36,27 @@ try:
 		# asking the user for easier understanding
 		usecase = str(input("Enter your password use-case incase you forget it. (Optional) : "))
 		ask = input("Do you want to hash it and view the hashed password (sha) ? ([Y]es/[N]o): ").lower()
-	
-	
-		generation_time = datetime.datetime.now()
-
-		# open the file to log the password
-		file = open("generated_password.txt","a")
-		if usecase == "":	
-			file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "\n")
-		else:
-			file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "-" + usecase + "\n")	
-		file.close()
-
-		print("The password is: " + c)
-		print("The generated password is also stored in `generated_password.txt` file.")
 
 		m = c
 
 		## Start the hasing process
 		# encode the password in binary
-		c = c.encode()
+		
 		if ask == "yes" or ask == "ye" or ask == "y" or ask == "":
+			generation_time = datetime.datetime.now()
+
+			# open the file to log the password
+			file = open("generated_password.txt","a")
+			if usecase == "":	
+				file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "\n")
+			else:
+				file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "-" + usecase + "\n")	
+			file.close()
+
+			print("The password is: " + c)
+			print("The generated password is also stored in `generated_password.txt` file.")
+			
+			c = c.encode()
 			# proccess the hash
 			hash1 = hashlib.sha1(c).hexdigest()
 			hash224 = hashlib.sha224(c).hexdigest()
@@ -106,9 +106,21 @@ try:
 			hash_store.write("	The hash in sha3_512 is: " + hash3_512 + " \n\n")
 			hash_store.close()
 			print("The generated hash is also stored in `hash_password.txt` file.")
-	
-	
+		elif ask == "no" or ask == "n" or ask == "":
+			generation_time = datetime.datetime.now()
 
+			# open the file to log the password
+			file = open("generated_password.txt","a")
+			if usecase == "":	
+				file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "\n")
+			else:
+				file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "-" + usecase + "\n")	
+			file.close()
+
+			print("The password is: " + c)
+			print("The generated password is also stored in `generated_password.txt` file.")
+			
+		
 	def ask():
 	
 		asks = input("Do you want to continue ? ([Y]es/[N]o) : ")
