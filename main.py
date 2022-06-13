@@ -66,7 +66,6 @@ try:
 			hash3_384 = hashlib.sha3_384(c).hexdigest()
 			hash3_512 = hashlib.sha3_512(c).hexdigest()
 
-			
 			sleep(0.5)
 			print("The hashed password in sha1 is: " + hash1)
 			sleep(0.5)
