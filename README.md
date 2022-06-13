@@ -10,6 +10,9 @@ The passwords are stored in `generated_password.txt` in the current working dire
 
 The format is `password : dd/mm/yyyy hh:mm:ss` where `dd/mm/yyyy` = date and `hh:mm:ss` = time of generation.
 
+# Where are the hashed passwords stored ? (Optional Feature)
+The hashes are store in `hashed_password.txt` incase you wanted to see the hashes again.
+
 # Are there any password generation limitations ?
 
 There are no password generation limitations. You can generate password as long as your Computer can handle.
