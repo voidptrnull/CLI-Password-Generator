@@ -13,9 +13,16 @@ special_letters = ["!","@","#","$","%","^","&","*","(",")","_","-","+","=","{","
 letters = upper_letters + lower_letters + digits + special_letters
 passwrd = []
 
+pwd = "./CLI_Password_Gen"
+doesExists = os.path.exists(pwd)
+if doesExists == False:
+	os.mkdir("CLI_Password_Gen")
+	os.chdir("./CLI_Password_Gen")
+else:
+	os.chdir("./CLI_Password_Gen")
+
 try:
 	def process():
-		
 		pno = str(input("Enter password length: "))    
 		random.shuffle(letters)
 	
@@ -33,17 +40,9 @@ try:
 		ask = input("Do you want to hash it and view the hashed password (sha) ? ([Y]es/[N]o): ").lower()
 
 		m = c
+		generation_time = datetime.datetime.now()
 
 		if ask == "yes" or ask == "ye" or ask == "y":
-			generation_time = datetime.datetime.now()
-			pwd = "./CLI_Password_Gen"
-			doesExists = os.path.exists(pwd)
-			if doesExists == False:
-				os.mkdir("CLI_Password_Gen")
-				os.chdir("./CLI_Password_Gen")
-			else:
-				os.chdir("./CLI_Password_Gen")
-
 			file = open("generated_password.txt","a")
 			if usecase == "":	
 				file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "\n")
@@ -110,15 +109,6 @@ try:
 			hash_store.close()
 			print("The generated hash is also stored in `hash_password.txt` file.")
 		elif ask == "no" or ask == "n" or ask == "":
-			generation_time = datetime.datetime.now()
-			pwd = "./CLI_Password_Gen"
-			doesExists = os.path.exists(pwd)
-			if doesExists == False:
-				os.mkdir("CLI_Password_Gen")
-				os.chdir("./CLI_Password_Gen")
-			else:
-				os.chdir("./CLI_Password_Gen")
-
 			file = open("generated_password.txt","a")
 			if usecase == "":	
 				file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "\n")
@@ -147,7 +137,7 @@ try:
 	ask()
 
 except KeyboardInterrupt:
-	print("\n Shutdown requested...Goodbye...")
+	print("\nCTRL + C. Exitng...")
 
 except ValueError:
 	print("Invalid. Not an integer. Please try again.")
@@ -165,17 +155,8 @@ except ValueError:
 		ask = input("Do you want to hash it and view the hashed password (sha) ? ([Y]es/[N]o): ").lower()
 
 		m = c
-
+		generation_time = datetime.datetime.now()
 		if ask == "yes" or ask == "ye" or ask == "y":
-			generation_time = datetime.datetime.now()
-			pwd = "./CLI_Password_Gen"
-			doesExists = os.path.exists(pwd)
-			if doesExists == False:
-				os.mkdir("CLI_Password_Gen")
-				os.chdir("./CLI_Password_Gen")
-			else:
-				os.chdir("./CLI_Password_Gen")
-
 			file = open("generated_password.txt","a")
 			if usecase == "":	
 				file.write(c + "  : " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "\n")
@@ -198,7 +179,6 @@ except ValueError:
 			hash3_384 = hashlib.sha3_384(c).hexdigest()
 			hash3_512 = hashlib.sha3_512(c).hexdigest()
 
-			
 			sleep(0.5)
 			print("The hashed password in sha1 is: " + hash1)
 			sleep(0.5)
@@ -243,15 +223,6 @@ except ValueError:
 			hash_store.close()
 			print("The generated hash is also stored in `hash_password.txt` file.")
 		elif ask == "no" or ask == "n" or ask == "":
-			generation_time = datetime.datetime.now()
-			pwd = "./CLI_Password_Gen"
-			doesExists = os.path.exists(pwd)
-			if doesExists == False:
-				os.mkdir("CLI_Password_Gen")
-				os.chdir("./CLI_Password_Gen")
-			else:
-				os.chdir("./CLI_Password_Gen")
-
 			file = open("generated_password.txt","a")
 			if usecase == "":	
 				file.write(c + "  : " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "\n")
