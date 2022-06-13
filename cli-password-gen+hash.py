@@ -3,6 +3,7 @@ import random
 import datetime
 import hashlib
 from time import sleep
+import os
 
 # source of alphabets
 upper_letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
@@ -16,8 +17,7 @@ passwrd = []
 
 try:
 	def process():
-	
-	
+		
 		pno = str(input("Enter password length: "))    
 		random.shuffle(letters)
 	
@@ -38,13 +38,19 @@ try:
 		ask = input("Do you want to hash it and view the hashed password (sha) ? ([Y]es/[N]o): ").lower()
 
 		m = c
-
 		## Start the hasing process
-		# encode the password in binary
 		
-		if ask == "yes" or ask == "ye" or ask == "y" or ask == "":
+		
+		if ask == "yes" or ask == "ye" or ask == "y":
 			generation_time = datetime.datetime.now()
-
+			pwd = "./CLI_Password_Gen"
+			doesExists = os.path.exists(pwd)
+			if doesExists == False:
+				os.mkdir("CLI_Password_Gen")
+				os.chdir("./CLI_Password_Gen")
+			else:
+				os.chdir("./CLI_Password_Gen")
+	
 			# open the file to log the password
 			file = open("generated_password.txt","a")
 			if usecase == "":	
@@ -56,7 +62,9 @@ try:
 			print("The password is: " + c)
 			print("The generated password is also stored in `generated_password.txt` file.")
 			
+			# encode the password in binary
 			c = c.encode()
+
 			# proccess the hash
 			hash1 = hashlib.sha1(c).hexdigest()
 			hash224 = hashlib.sha224(c).hexdigest()
@@ -69,7 +77,7 @@ try:
 			hash3_384 = hashlib.sha3_384(c).hexdigest()
 			hash3_512 = hashlib.sha3_512(c).hexdigest()
 
-			# Print on Console
+			
 			sleep(1)
 			print("The hashed password in sha1 is: " + hash1)
 			print("The hashed password in sha224 is: " + hash224)
@@ -81,7 +89,7 @@ try:
 			print("The hashed password in sha3_384 is: " + hash3_384)
 			print("The hashed password in sha3_512 is: " + hash3_512)
 
-			# convert hash to string
+			# convert hex to string
 			hash1 = str(hash1)
 			hash224 = str(hash224)
 			hash256 = str(hash256)
@@ -108,6 +116,13 @@ try:
 			print("The generated hash is also stored in `hash_password.txt` file.")
 		elif ask == "no" or ask == "n" or ask == "":
 			generation_time = datetime.datetime.now()
+			pwd = "./CLI_Password_Gen"
+			doesExists = os.path.exists(pwd)
+			if doesExists == False:
+				os.mkdir("CLI_Password_Gen")
+				os.chdir("./CLI_Password_Gen")
+			else:
+				os.chdir("./CLI_Password_Gen")
 
 			# open the file to log the password
 			file = open("generated_password.txt","a")
@@ -119,10 +134,8 @@ try:
 
 			print("The password is: " + c)
 			print("The generated password is also stored in `generated_password.txt` file.")
-			
-		
-	def ask():
-	
+				
+	def ask():	
 		asks = input("Do you want to continue ? ([Y]es/[N]o) : ")
 		if asks == "yes" or asks == "ye" or asks == "y" or asks == "":
 			while asks == "yes" or asks == "ye" or asks == "y" or asks == "":
@@ -133,12 +146,13 @@ try:
 			print("Exiting...")
 			quit()
 		else:
-			print("Invalid.Try again.")
+			print("Invalid. Please try again.")
 			ask()
 	
-
 	process()
 	ask()
 
 except KeyboardInterrupt:
 		print("\n Shutdown requested...Goodbye...")
+except ValueError:
+		print("Continuing with default values...")
