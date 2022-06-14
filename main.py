@@ -4,6 +4,7 @@ import datetime
 import hashlib
 from time import sleep
 import os
+from tkinter.simpledialog import askstring
 
 upper_letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 lower_letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
@@ -21,244 +22,158 @@ if doesExists == False:
 else:
 	os.chdir("./CLI_Password_Gen")
 
-try:
-	def process():
-		sleep(0.7)
-		pno = int(input("Enter password length: "))
-		random.shuffle(letters)
-		#if pno == "":
-		#	print("Repeatedly Pressing Enter will double the default value by 2.")
-		#	sleep(2)
-		#	pno = "16"	
-		#pno = int(pno)
+def clear():
+		os.system("cls")
 
-		for i in range(pno):
-			passwrd.append(random.choice(letters))
-		random.shuffle(passwrd)
-		c = "".join(passwrd)
-		sleep(0.7)
-		usecase = str(input("Enter your password use-case incase you forget it. (Optional) : "))
-		sleep(0.7)
-		ask = input("Do you want to hash it and view the hashed password (sha) ? ([Y]es/[N]o): ").lower()
-		sleep(0.7)
-
-		m = c
-		generation_time = datetime.datetime.now()
-
-		if ask == "yes" or ask == "ye" or ask == "y":
-			file = open("generated_password.txt","a")
-			if usecase == "":	
-				file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "\n")
-			else:
-				file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "-" + usecase + "\n")	
-			file.close()
-
-			print("The password is: " + c)
-			print("The generated password is also stored in `generated_password.txt` file.")
-			
-			c = c.encode()
-			hash1 = hashlib.sha1(c).hexdigest()
-			hash224 = hashlib.sha224(c).hexdigest()
-			hash256 = hashlib.sha256(c).hexdigest()
-			hash384 = hashlib.sha384(c).hexdigest()
-			hash512 = hashlib.sha512(c).hexdigest()
+def banner():
+		print('''
 		
-			hash3_224 = hashlib.sha3_224(c).hexdigest()
-			hash3_256 = hashlib.sha3_256(c).hexdigest()
-			hash3_384 = hashlib.sha3_384(c).hexdigest()
-			hash3_512 = hashlib.sha3_512(c).hexdigest()
+░█████╗░██╗░░░░░██╗  ██████╗░░█████╗░░██████╗░██████╗░██╗░░░░░░░██╗░█████╗░██████╗░██████╗░
+██╔══██╗██║░░░░░██║  ██╔══██╗██╔══██╗██╔════╝██╔════╝░██║░░██╗░░██║██╔══██╗██╔══██╗██╔══██╗
+██║░░╚═╝██║░░░░░██║  ██████╔╝███████║╚█████╗░╚█████╗░░╚██╗████╗██╔╝██║░░██║██████╔╝██║░░██║
+██║░░██╗██║░░░░░██║  ██╔═══╝░██╔══██║░╚═══██╗░╚═══██╗░░████╔═████║░██║░░██║██╔══██╗██║░░██║
+╚█████╔╝███████╗██║  ██║░░░░░██║░░██║██████╔╝██████╔╝░░╚██╔╝░╚██╔╝░╚█████╔╝██║░░██║██████╔╝
+░╚════╝░╚══════╝╚═╝  ╚═╝░░░░░╚═╝░░╚═╝╚═════╝░╚═════╝░░░░╚═╝░░░╚═╝░░░╚════╝░╚═╝░░╚═╝╚═════╝░
 
-			sleep(0.5)
-			print("The hashed password in sha1 is: " + hash1)
-			sleep(0.5)
-			print("The hashed password in sha224 is: " + hash224)
-			sleep(0.5)
-			print("The hashed password in sha256 is: " + hash256)
-			sleep(0.5)
-			print("The hashed password in sha384 is: " + hash384)
-			sleep(0.5)
-			print("The hashed password in sha512 is: " + hash512)
-			sleep(0.5)
-			print("The hashed password in sha3_224 is: " + hash3_224)
-			sleep(0.5)
-			print("The hashed password in sha3_256 is: " + hash3_256)
-			sleep(0.5)
-			print("The hashed password in sha3_384 is: " + hash3_384)
-			sleep(0.5)
-			print("The hashed password in sha3_512 is: " + hash3_512)
-			sleep(0.5)
+░██████╗░███████╗███╗░░██╗███████╗██████╗░░█████╗░████████╗░█████╗░██████╗░
+██╔════╝░██╔════╝████╗░██║██╔════╝██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗██╔══██╗
+██║░░██╗░█████╗░░██╔██╗██║█████╗░░██████╔╝███████║░░░██║░░░██║░░██║██████╔╝
+██║░░╚██╗██╔══╝░░██║╚████║██╔══╝░░██╔══██╗██╔══██║░░░██║░░░██║░░██║██╔══██╗
+╚██████╔╝███████╗██║░╚███║███████╗██║░░██║██║░░██║░░░██║░░░╚█████╔╝██║░░██║
+░╚═════╝░╚══════╝╚═╝░░╚══╝╚══════╝╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░░╚════╝░╚═╝░░╚═╝
+	# Made by SrcyDev (https://github.com/SrcyDev/)
+	# Project CLI Password Generator (https://github.com/SrcyDev/CLI-Password-Generator/)
+		''')
+def process():
+	sleep(0.7)
+	pno = int(input("Enter password length: "))
+	random.shuffle(letters)
+	#if pno == "":
+	#	print("Repeatedly Pressing Enter will double the default value by 2.")
+	#	sleep(2)
+	#	pno = "16"	
+	#pno = int(pno)
+	for i in range(pno):
+		passwrd.append(random.choice(letters))
+	random.shuffle(passwrd)
+	c = "".join(passwrd)
+	sleep(0.7)
+	usecase = str(input("Enter your password use-case incase you forget it. (Optional) : "))
+	sleep(0.7)
+	ask = input("Do you want to hash it and view the hashed password (sha) ? ([Y]es/[N]o): ").lower()
+	sleep(0.7)
 
-			hash1 = str(hash1)
-			hash224 = str(hash224)
-			hash256 = str(hash256)
-			hash384 = str(hash384)
-			hash512 = str(hash512)
-			hash3_224 = str(hash3_224)
-			hash3_256 = str(hash3_256)
-			hash3_384 = str(hash3_384)
-			hash3_512 = str(hash3_512)
+	m = c
+	generation_time = datetime.datetime.now()
 
-			hash_store = open("hashed_password.txt","a")
-			hash_store.write("The hashes for password "+ m +" generated at "  +  " : " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S"))  + " is: \n")
-			hash_store.write("	The hash in sha1 is: " + hash1 + " \n")
-			hash_store.write("	The hash in sha224 is: " + hash224 + " \n")
-			hash_store.write("	The hash in sha256 is: " + hash256 + " \n")
-			hash_store.write("	The hash in sha384 is: " + hash384 + " \n")
-			hash_store.write("	The hash in sha512 is: " + hash512 + " \n")
-			hash_store.write("	The hash in sha3_224 is: " + hash3_224 + " \n")
-			hash_store.write("	The hash in sha3_256 is: " + hash3_256 + " \n")
-			hash_store.write("	The hash in sha3_384 is: " + hash3_384 + " \n")
-			hash_store.write("	The hash in sha3_512 is: " + hash3_512 + " \n\n")
-			hash_store.close()
-			print("The generated hash is also stored in `hash_password.txt` file.")
-		elif ask == "no" or ask == "n" or ask == "":
-			file = open("generated_password.txt","a")
-			if usecase == "":	
-				file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "\n")
-			else:
-				file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "-" + usecase + "\n")	
-			file.close()
+	if ask == "yes" or ask == "ye" or ask == "y":
+		file = open("generated_password.txt","a")
+		if usecase == "":	
+			file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "\n")
+		else:
+			file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "-" + usecase + "\n")	
+		file.close()
 
-			print("The password is: " + c)
-			print("The generated password is also stored in `generated_password.txt` file.")
+		print("The password is: " + c)
+		print("The generated password is also stored in `generated_password.txt` file.")
+			
+		c = c.encode()
+		hash1 = hashlib.sha1(c).hexdigest()
+		hash224 = hashlib.sha224(c).hexdigest()
+		hash256 = hashlib.sha256(c).hexdigest()
+		hash384 = hashlib.sha384(c).hexdigest()
+		hash512 = hashlib.sha512(c).hexdigest()
+	
+		hash3_224 = hashlib.sha3_224(c).hexdigest()
+		hash3_256 = hashlib.sha3_256(c).hexdigest()
+		hash3_384 = hashlib.sha3_384(c).hexdigest()
+		hash3_512 = hashlib.sha3_512(c).hexdigest()
+
+		sleep(0.5)
+		print("The hashed password in sha1 is: " + hash1)
+		sleep(0.5)
+		print("The hashed password in sha224 is: " + hash224)
+		sleep(0.5)
+		print("The hashed password in sha256 is: " + hash256)
+		sleep(0.5)
+		print("The hashed password in sha384 is: " + hash384)
+		sleep(0.5)
+		print("The hashed password in sha512 is: " + hash512)
+		sleep(0.5)
+		print("The hashed password in sha3_224 is: " + hash3_224)
+		sleep(0.5)
+		print("The hashed password in sha3_256 is: " + hash3_256)
+		sleep(0.5)
+		print("The hashed password in sha3_384 is: " + hash3_384)
+		sleep(0.5)
+		print("The hashed password in sha3_512 is: " + hash3_512)
+		sleep(0.5)
+
+		hash1 = str(hash1)
+		hash224 = str(hash224)
+		hash256 = str(hash256)
+		hash384 = str(hash384)
+		hash512 = str(hash512)
+		hash3_224 = str(hash3_224)
+		hash3_256 = str(hash3_256)
+		hash3_384 = str(hash3_384)
+		hash3_512 = str(hash3_512)
+
+		hash_store = open("hashed_password.txt","a")
+		hash_store.write("The hashes for password "+ m +" generated at "  +  " : " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S"))  + " is: \n")
+		hash_store.write("	The hash in sha1 is: " + hash1 + " \n")
+		hash_store.write("	The hash in sha224 is: " + hash224 + " \n")
+		hash_store.write("	The hash in sha256 is: " + hash256 + " \n")
+		hash_store.write("	The hash in sha384 is: " + hash384 + " \n")
+		hash_store.write("	The hash in sha512 is: " + hash512 + " \n")
+		hash_store.write("	The hash in sha3_224 is: " + hash3_224 + " \n")
+		hash_store.write("	The hash in sha3_256 is: " + hash3_256 + " \n")
+		hash_store.write("	The hash in sha3_384 is: " + hash3_384 + " \n")
+		hash_store.write("	The hash in sha3_512 is: " + hash3_512 + " \n\n")
+		hash_store.close()
+		print("The generated hash is also stored in `hash_password.txt` file.")
+	elif ask == "no" or ask == "n" or ask == "":
+		file = open("generated_password.txt","a")
+		if usecase == "":	
+			file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "\n")
+		else:
+			file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "-" + usecase + "\n")	
+		file.close()
+
+		print("The password is: " + c)
+		print("The generated password is also stored in `generated_password.txt` file.")
 		
 				
-	def ask():
-		sleep(0.7)
-		asks = input("Do you want to continue ? ([Y]es/[N]o) : ")
-		if asks == "yes" or asks == "ye" or asks == "y" or asks == "":
-			while asks == "yes" or asks == "ye" or asks == "y" or asks == "":
-				process()
-				ask()
-				break
-		elif asks == "no" or asks == "n":
-			print("Exiting...")
-			quit()
-		else:
-			print("Invalid. Please try again.")
+def ask():
+	sleep(0.7)
+	asks = input("Do you want to continue ? ([Y]es/[N]o) : ")
+	if asks == "yes" or asks == "ye" or asks == "y" or asks == "":
+		while asks == "yes" or asks == "ye" or asks == "y" or asks == "":
+			clear()
+			process()
 			ask()
+			break
+	elif asks == "no" or asks == "n":
+		print("Exiting...")
+		quit()
+	else:
+		print("Invalid. Please try again.")
+		ask()
+			
 	
+
+try:
+	clear()
+	banner()
 	process()
 	ask()
 
+	
 except KeyboardInterrupt:
 	print("\nCTRL + C. Exitng...")
 
 except ValueError:
-	print("Invalid. Not an integer. Please try again.")
-	def process():
-		random.shuffle(letters)
-		sleep(0.7)
-		pno = str(input("Enter password length: "))
-
-		if pno == "":
-			print("Repeatedly Pressing Enter will double the default value (16) by 2.")
-			sleep(2)
-			pno = "16"
-
-		int(pno)
-		for i in range(pno):
-			passwrd.append(random.choice(letters))
-		random.shuffle(passwrd)
-		c = "".join(passwrd)
-		sleep(0.7)
-		usecase = str(input("Enter your password use-case incase you forget it. (Optional) : "))
-		sleep(0.7)
-		ask = input("Do you want to hash it and view the hashed password (sha) ? ([Y]es/[N]o): ").lower()
-
-		m = c
-		generation_time = datetime.datetime.now()
-		if ask == "yes" or ask == "ye" or ask == "y":
-			file = open("generated_password.txt","a")
-			if usecase == "":	
-				file.write(c + "  : " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "\n")
-			else:
-				file.write(c + "  : " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "-" + usecase + "\n")	
-			file.close()
-
-			print("The password is: " + c)
-			print("The generated password is also stored in `generated_password.txt` file.")
-			
-			c = c.encode()
-			hash1 = hashlib.sha1(c).hexdigest()
-			hash224 = hashlib.sha224(c).hexdigest()
-			hash256 = hashlib.sha256(c).hexdigest()
-			hash384 = hashlib.sha384(c).hexdigest()
-			hash512 = hashlib.sha512(c).hexdigest()
-		
-			hash3_224 = hashlib.sha3_224(c).hexdigest()
-			hash3_256 = hashlib.sha3_256(c).hexdigest()
-			hash3_384 = hashlib.sha3_384(c).hexdigest()
-			hash3_512 = hashlib.sha3_512(c).hexdigest()
-
-			sleep(0.5)
-			print("The hashed password in sha1 is: " + hash1)
-			sleep(0.5)
-			print("The hashed password in sha224 is: " + hash224)
-			sleep(0.5)
-			print("The hashed password in sha256 is: " + hash256)
-			sleep(0.5)
-			print("The hashed password in sha384 is: " + hash384)
-			sleep(0.5)
-			print("The hashed password in sha512 is: " + hash512)
-			sleep(0.5)
-			print("The hashed password in sha3_224 is: " + hash3_224)
-			sleep(0.5)
-			print("The hashed password in sha3_256 is: " + hash3_256)
-			sleep(0.5)
-			print("The hashed password in sha3_384 is: " + hash3_384)
-			sleep(0.5)
-			print("The hashed password in sha3_512 is: " + hash3_512)
-			sleep(0.5)
-
-			hash1 = str(hash1)
-			hash224 = str(hash224)
-			hash256 = str(hash256)
-			hash384 = str(hash384)
-			hash512 = str(hash512)
-			hash3_224 = str(hash3_224)
-			hash3_256 = str(hash3_256)
-			hash3_384 = str(hash3_384)
-			hash3_512 = str(hash3_512)
-
-			hash_store = open("hashed_password.txt","a")
-			hash_store.write("The hashes for password "+ m +" generated at "  +  " : " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S"))  + " is: \n")
-			hash_store.write("	The hash in sha1 is: " + hash1 + " \n")
-			hash_store.write("	The hash in sha224 is: " + hash224 + " \n")
-			hash_store.write("	The hash in sha256 is: " + hash256 + " \n")
-			hash_store.write("	The hash in sha384 is: " + hash384 + " \n")
-			hash_store.write("	The hash in sha512 is: " + hash512 + " \n")
-			hash_store.write("	The hash in sha3_224 is: " + hash3_224 + " \n")
-			hash_store.write("	The hash in sha3_256 is: " + hash3_256 + " \n")
-			hash_store.write("	The hash in sha3_384 is: " + hash3_384 + " \n")
-			hash_store.write("	The hash in sha3_512 is: " + hash3_512 + " \n\n")
-			hash_store.close()
-			print("The generated hash is also stored in `hash_password.txt` file.")
-		elif ask == "no" or ask == "n" or ask == "":
-			file = open("generated_password.txt","a")
-			if usecase == "":	
-				file.write(c + "  : " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "\n")
-			else:
-				file.write(c + "  : " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "-" + usecase + "\n")	
-			file.close()
-
-			print("The password is: " + c)
-			print("The generated password is also stored in `generated_password.txt` file.")
-				
-	def ask():
-		sleep(0.7)
-		asks = input("Do you want to continue ? ([Y]es/[N]o) : ")
-		if asks == "yes" or asks == "ye" or asks == "y" or asks == "":
-			while asks == "yes" or asks == "ye" or asks == "y" or asks == "":
-				process()
-				ask()
-				break
-		elif asks == "no" or asks == "n":
-			print("Exiting...")
-			quit()
-		else:
-			print("Invalid. Please try again.")
-			ask()
-	
+	clear()
+	banner()
 	process()
 	ask()
