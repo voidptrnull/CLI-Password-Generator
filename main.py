@@ -23,21 +23,24 @@ else:
 
 try:
 	def process():
-		pno = str(input("Enter password length: "))    
+		sleep(0.7)
+		pno = int(input("Enter password length: "))
 		random.shuffle(letters)
-	
-		if pno == "":
-			pno = 16
-
-		pno = int(pno)
+		#if pno == "":
+		#	print("Repeatedly Pressing Enter will double the default value by 2.")
+		#	sleep(2)
+		#	pno = "16"	
+		#pno = int(pno)
 
 		for i in range(pno):
 			passwrd.append(random.choice(letters))
 		random.shuffle(passwrd)
 		c = "".join(passwrd)
-
+		sleep(0.7)
 		usecase = str(input("Enter your password use-case incase you forget it. (Optional) : "))
+		sleep(0.7)
 		ask = input("Do you want to hash it and view the hashed password (sha) ? ([Y]es/[N]o): ").lower()
+		sleep(0.7)
 
 		m = c
 		generation_time = datetime.datetime.now()
@@ -118,8 +121,10 @@ try:
 
 			print("The password is: " + c)
 			print("The generated password is also stored in `generated_password.txt` file.")
+		
 				
-	def ask():	
+	def ask():
+		sleep(0.7)
 		asks = input("Do you want to continue ? ([Y]es/[N]o) : ")
 		if asks == "yes" or asks == "ye" or asks == "y" or asks == "":
 			while asks == "yes" or asks == "ye" or asks == "y" or asks == "":
@@ -143,15 +148,22 @@ except ValueError:
 	print("Invalid. Not an integer. Please try again.")
 	def process():
 		random.shuffle(letters)
+		sleep(0.7)
 		pno = str(input("Enter password length: "))
-		pno = int(pno)
 
+		if pno == "":
+			print("Repeatedly Pressing Enter will double the default value (16) by 2.")
+			sleep(2)
+			pno = "16"
+
+		int(pno)
 		for i in range(pno):
 			passwrd.append(random.choice(letters))
 		random.shuffle(passwrd)
 		c = "".join(passwrd)
-
+		sleep(0.7)
 		usecase = str(input("Enter your password use-case incase you forget it. (Optional) : "))
+		sleep(0.7)
 		ask = input("Do you want to hash it and view the hashed password (sha) ? ([Y]es/[N]o): ").lower()
 
 		m = c
@@ -233,7 +245,8 @@ except ValueError:
 			print("The password is: " + c)
 			print("The generated password is also stored in `generated_password.txt` file.")
 				
-	def ask():	
+	def ask():
+		sleep(0.7)
 		asks = input("Do you want to continue ? ([Y]es/[N]o) : ")
 		if asks == "yes" or asks == "ye" or asks == "y" or asks == "":
 			while asks == "yes" or asks == "ye" or asks == "y" or asks == "":
