@@ -4,7 +4,6 @@ import datetime
 import hashlib
 from time import sleep
 import os
-from tkinter.simpledialog import askstring
 
 upper_letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 lower_letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
@@ -23,12 +22,13 @@ else:
 	os.chdir("./CLI_Password_Gen")
 
 def clear():
-		os.system("cls")
+	os.system("cls") # For Windows only
+	#os.system("clear") # For Linux Only
 
-def banner():
-		print('''
+
+print('''
 		
-░█████╗░██╗░░░░░██╗  ██████╗░░█████╗░░██████╗░██████╗░██╗░░░░░░░██╗░█████╗░██████╗░██████╗░
+\u001b[33m░█████╗░██╗░░░░░██╗  ██████╗░░█████╗░░██████╗░██████╗░██╗░░░░░░░██╗░█████╗░██████╗░██████╗░
 ██╔══██╗██║░░░░░██║  ██╔══██╗██╔══██╗██╔════╝██╔════╝░██║░░██╗░░██║██╔══██╗██╔══██╗██╔══██╗
 ██║░░╚═╝██║░░░░░██║  ██████╔╝███████║╚█████╗░╚█████╗░░╚██╗████╗██╔╝██║░░██║██████╔╝██║░░██║
 ██║░░██╗██║░░░░░██║  ██╔═══╝░██╔══██║░╚═══██╗░╚═══██╗░░████╔═████║░██║░░██║██╔══██╗██║░░██║
@@ -40,50 +40,69 @@ def banner():
 ██║░░██╗░█████╗░░██╔██╗██║█████╗░░██████╔╝███████║░░░██║░░░██║░░██║██████╔╝
 ██║░░╚██╗██╔══╝░░██║╚████║██╔══╝░░██╔══██╗██╔══██║░░░██║░░░██║░░██║██╔══██╗
 ╚██████╔╝███████╗██║░╚███║███████╗██║░░██║██║░░██║░░░██║░░░╚█████╔╝██║░░██║
-░╚═════╝░╚══════╝╚═╝░░╚══╝╚══════╝╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░░╚════╝░╚═╝░░╚═╝
-	# Made by SrcyDev (https://github.com/SrcyDev/)
-	# Project CLI Password Generator (https://github.com/SrcyDev/CLI-Password-Generator/)
-		''')
+░╚═════╝░╚══════╝╚═╝░░╚══╝╚══════╝╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░░╚════╝░╚═╝░░╚═╝\u001b[0m
+	# Made by \u001b[37;1mSrcyDev\u001b[0m (https://github.com/SrcyDev/)
+	# Project: \u001b[37;1mCLI Password Generator\u001b[0m (https://github.com/SrcyDev/CLI-Password-Generator/)
+''')
 def process():
 	sleep(0.7)
-	pno = int(input("Enter password length: "))
+	print("\u001b[36mEnter password length: \u001b[0m")
+	pno = str(input("\u001b[32m>\u001b[1C \u001b[0m"))
+	
+	if pno == "":
+		pno = 16
+	pno = int(pno)
+	if pno <= 0:
+		print("\u001b[31mPassword Cannot be 0 or less.\u001b[0m")
+		process()
 	random.shuffle(letters)
-	#if pno == "":
-	#	print("Repeatedly Pressing Enter will double the default value by 2.")
-	#	sleep(2)
-	#	pno = "16"	
-	#pno = int(pno)
-	for i in range(pno):
+	i = 1
+
+	while i != pno:
 		passwrd.append(random.choice(letters))
+		i = i + 1
+	
 	random.shuffle(passwrd)
 	c = "".join(passwrd)
+	passwrd.clear()
 	sleep(0.7)
-	usecase = str(input("Enter your password use-case incase you forget it. (Optional) : "))
+	print("\u001b[36mEnter your password use-case incase you forget it. (Optional) : \u001b[0m")
+	usecase = str(input("\u001b[32m>\u001b[1C \u001b[0m"))
 	sleep(0.7)
-	ask = input("Do you want to hash it and view the hashed password (sha) ? ([Y]es/[N]o): ").lower()
+	print("\u001b[36mDo you want to hash it and view the hashed password ? \u001b[34;1m(SHA)\u001b[0m\u001b[36m(\u001b[0m\u001b[37;1m[Y]\u001b[0mes/\u001b[37;1m[N]o\u001b[0m\u001b[36m) :\u001b[0m")
+	ask = input("\u001b[32m>\u001b[1C \u001b[0m").lower()
 	sleep(0.7)
-
-	m = c
+	print("The password is: " + c)
+	print("The generated password is also stored in \u001b[37;1m./CLI_Password_Gen\generated_password.txt\u001b[0m file.")
 	generation_time = datetime.datetime.now()
+	file = open("generated_password.txt","a")
+	if usecase == "":	
+		file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "\n")
+	else:
+		file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "-" + usecase + "\n")	
+	file.close()
 
 	if ask == "yes" or ask == "ye" or ask == "y":
-		file = open("generated_password.txt","a")
-		if usecase == "":	
-			file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "\n")
-		else:
-			file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "-" + usecase + "\n")	
-		file.close()
-
-		print("The password is: " + c)
-		print("The generated password is also stored in `generated_password.txt` file.")
-			
+		hash_store = open("hashed_password.txt","a")
+		hash_store.write("The hashes for password "+ c +" generated at "  +  " : " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S"))  + " is: \n")
+		hash_store.write("	The hash in sha1 is: " + hash1 + " \n")
+		hash_store.write("	The hash in sha224 is: " + hash224 + " \n")
+		hash_store.write("	The hash in sha256 is: " + hash256 + " \n")
+		hash_store.write("	The hash in sha384 is: " + hash384 + " \n")
+		hash_store.write("	The hash in sha512 is: " + hash512 + " \n")
+		hash_store.write("	The hash in sha3_224 is: " + hash3_224 + " \n")
+		hash_store.write("	The hash in sha3_256 is: " + hash3_256 + " \n")
+		hash_store.write("	The hash in sha3_384 is: " + hash3_384 + " \n")
+		hash_store.write("	The hash in sha3_512 is: " + hash3_512 + " \n\n")
+		hash_store.close()
+		print("The generated hash is also stored in \u001b[37;1m./CLI_Password_Gen\hash_password.txt\u001b[0m file.")
+	
 		c = c.encode()
 		hash1 = hashlib.sha1(c).hexdigest()
 		hash224 = hashlib.sha224(c).hexdigest()
 		hash256 = hashlib.sha256(c).hexdigest()
 		hash384 = hashlib.sha384(c).hexdigest()
-		hash512 = hashlib.sha512(c).hexdigest()
-	
+		hash512 = hashlib.sha512(c).hexdigest()	
 		hash3_224 = hashlib.sha3_224(c).hexdigest()
 		hash3_256 = hashlib.sha3_256(c).hexdigest()
 		hash3_384 = hashlib.sha3_384(c).hexdigest()
@@ -109,71 +128,40 @@ def process():
 		print("The hashed password in sha3_512 is: " + hash3_512)
 		sleep(0.5)
 
-		hash1 = str(hash1)
-		hash224 = str(hash224)
-		hash256 = str(hash256)
-		hash384 = str(hash384)
-		hash512 = str(hash512)
-		hash3_224 = str(hash3_224)
-		hash3_256 = str(hash3_256)
-		hash3_384 = str(hash3_384)
-		hash3_512 = str(hash3_512)
-
-		hash_store = open("hashed_password.txt","a")
-		hash_store.write("The hashes for password "+ m +" generated at "  +  " : " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S"))  + " is: \n")
-		hash_store.write("	The hash in sha1 is: " + hash1 + " \n")
-		hash_store.write("	The hash in sha224 is: " + hash224 + " \n")
-		hash_store.write("	The hash in sha256 is: " + hash256 + " \n")
-		hash_store.write("	The hash in sha384 is: " + hash384 + " \n")
-		hash_store.write("	The hash in sha512 is: " + hash512 + " \n")
-		hash_store.write("	The hash in sha3_224 is: " + hash3_224 + " \n")
-		hash_store.write("	The hash in sha3_256 is: " + hash3_256 + " \n")
-		hash_store.write("	The hash in sha3_384 is: " + hash3_384 + " \n")
-		hash_store.write("	The hash in sha3_512 is: " + hash3_512 + " \n\n")
-		hash_store.close()
-		print("The generated hash is also stored in `hash_password.txt` file.")
 	elif ask == "no" or ask == "n" or ask == "":
-		file = open("generated_password.txt","a")
-		if usecase == "":	
-			file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "\n")
-		else:
-			file.write(c + ": " + str(generation_time.strftime("%d/%m/%Y %H:%M:%S")) + "-" + usecase + "\n")	
-		file.close()
+		pass
+	else:
+		print("\u001b[31;1mHash was not generated.\u001b[0m")
+	
 
-		print("The password is: " + c)
-		print("The generated password is also stored in `generated_password.txt` file.")
-		
-				
 def ask():
 	sleep(0.7)
-	asks = input("Do you want to continue ? ([Y]es/[N]o) : ")
+	print("\u001b[36mDo you want to continue ? (\u001b[37;1m[Y]\u001b[0mes/\u001b[37;1m[N]o\u001b[0m\u001b[36m) :\u001b[0m ")
+	asks = input("\u001b[32m> \u001b[0m")
 	if asks == "yes" or asks == "ye" or asks == "y" or asks == "":
 		while asks == "yes" or asks == "ye" or asks == "y" or asks == "":
-			clear()
+			print("\u001b[32;1mContinuing...\u001b[0m")
 			process()
 			ask()
+			clear()
 			break
 	elif asks == "no" or asks == "n":
-		print("Exiting...")
+		print("\u001b[31;1mExiting...\u001b[0m")
 		quit()
 	else:
-		print("Invalid. Please try again.")
+		print("\u001b[31;1mInvalid.\u001b[31mPlease try again.\u001b[0m")
 		ask()
-			
-	
-
-try:
 	clear()
-	banner()
+			
+try:
 	process()
 	ask()
-
 	
 except KeyboardInterrupt:
-	print("\nCTRL + C. Exitng...")
+	print("\n^C. \u001b[31;1m\nExitng...\u001b[0m")
 
 except ValueError:
-	clear()
-	banner()
+	print("\u001b[31mInvalid Values Passed.")
+	print("\u001b[31m;1mERROR....\u001b[0m")
 	process()
 	ask()
