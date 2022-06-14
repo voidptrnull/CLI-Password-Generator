@@ -25,7 +25,7 @@ else:
 
 def clear():
 	os.system("cls") # For Windows only
-	#os.system("clear") # For Linux Only
+	os.system("clear") # For Linux Only
 
 
 print('''
