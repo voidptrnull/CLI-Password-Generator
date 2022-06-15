@@ -1,4 +1,5 @@
 # Last edited on 15/06/22
+#!/usr/bin/env python3
 import random
 import datetime
 import hashlib
