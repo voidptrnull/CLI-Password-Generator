@@ -1,4 +1,4 @@
-# Last edited on 14/06/22
+# Last edited on 15/06/22
 import random
 import datetime
 import hashlib
@@ -22,11 +22,6 @@ if doesExists == False:
 	os.chdir("./CLI_Password_Gen")
 else:
 	os.chdir("./CLI_Password_Gen")
-
-def clear():
-	os.system("cls") # For Windows only
-	os.system("clear") # For Linux Only
-
 
 print('''
 		
@@ -129,7 +124,6 @@ def process():
 		sleep(0.5)
 		print("The hashed password in sha3_512 is: " + hash3_512)
 		sleep(0.5)
-
 	elif ask == "no" or ask == "n" or ask == "":
 		pass
 	else:
@@ -139,13 +133,13 @@ def process():
 def ask():
 	sleep(0.7)
 	print("\u001b[36mDo you want to continue ? (\u001b[37;1m[Y]\u001b[0mes/\u001b[37;1m[N]o\u001b[0m\u001b[36m) :\u001b[0m ")
-	asks = input("\u001b[32m> \u001b[0m")
+	asks = input("\u001b[32m> \u001b[0m").lower()
 	if asks == "yes" or asks == "ye" or asks == "y" or asks == "":
 		while asks == "yes" or asks == "ye" or asks == "y" or asks == "":
 			print("\u001b[32;1mContinuing...\u001b[0m")
 			process()
 			ask()
-			clear()
+			
 			break
 	elif asks == "no" or asks == "n":
 		print("\u001b[31;1mExiting...\u001b[0m")
@@ -153,7 +147,6 @@ def ask():
 	else:
 		print("\u001b[31;1mInvalid.\u001b[31mPlease try again.\u001b[0m")
 		ask()
-	clear()
 			
 try:
 	process()
@@ -164,6 +157,6 @@ except KeyboardInterrupt:
 
 except ValueError:
 	print("\u001b[31mInvalid Values Passed.")
-	print("\u001b[31m;1mERROR....\u001b[0m")
+	print("\u001b[31;1mERROR....\u001b[0m")
 	process()
 	ask()
