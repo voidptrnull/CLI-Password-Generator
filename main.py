@@ -16,13 +16,13 @@ special_letters = ["!","@","#","$","%","^","&","*","(",")","_","-","+","=","{","
 letters = upper_letters + lower_letters + digits + special_letters
 passwrd = []
 
-pwd = "./CLI_Password_Gen"
+pwd = "~/CLI_Password_Gen"
 doesExists = os.path.exists(pwd)
 if doesExists == False:
-	os.mkdir("CLI_Password_Gen")
-	os.chdir("./CLI_Password_Gen")
+	os.mkdir("~/CLI_Password_Gen")
+	os.chdir("~/CLI_Password_Gen")
 else:
-	os.chdir("./CLI_Password_Gen")
+	os.chdir("~/CLI_Password_Gen")
 
 print('''
 		
