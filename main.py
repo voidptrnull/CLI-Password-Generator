@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3 
 from random import choice,shuffle
 import datetime 
 from hashlib import sha1,sha224,sha256,sha384,sha512,sha3_224,sha3_256,sha3_384,sha3_512
