@@ -1,5 +1,7 @@
 # CLI-Password-Generator
 Advanced Password Generator to generate passwords in Terminal that stores the passwords in a file.
+> [!WARNING]
+> Archival Notice: This project has been archived.
 
 # Why should I prefer this than already others available ?
 This Password Generator generates passwords and stores them with the time of generation in case you get confused.
